@@ -1,6 +1,5 @@
 # Import python packages
 import streamlit as st
-from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark.functions import col
 
 
@@ -11,8 +10,8 @@ st.write("choose the fruits that you want in your custom smoothie ")
 name_on_order = st.text_input('Name on smoothie :')
 st.write('The name on your smoothie wiil be : ', name_on_order)
 
-
-session = get_active_session()
+cnx = st.connection("snowflake")
+session = cnx.session()
 my_dataframe = session.table("SMOOTHIES.PUBLIC.FRUIT_OPTIONS").select(col('Fruit_name'))
 #st.dataframe(data= my_dataframe ,use_container_width=True)
 
